@@ -2,19 +2,23 @@ from PyPDF2 import PdfWriter
 
 merger = PdfWriter()
 
+input1 = open("document1.pdf", "rb")
+input2 = open("document2.pdf", "rb")
+input3 = open("document3.pdf", "rb")
 
-def local(loc):
-    return 0
+# add the first 3 pages of input1 document to output
+merger.append(fileobj=input1, pages=(0, 3))
 
+# insert the first page of input2 into the output beginning after the second page
+merger.merge(position=2, fileobj=input2, pages=(0, 1))
 
-def merge(a1,a2):
-    arquivo1 = open(a1,"rb")
-    arquivo2 = open(a2,"rb")
+# append entire input3 document to the end of the output document
+merger.append(input3)
 
-    merger.append(fileobj=arquivo1, pages=(0, 1))
-    merger.merge(position=2, fileobj=arquivo2, pages=(0, 1))
+# Write to an output PDF document
+output = open("document-output.pdf", "wb")
+merger.write(output)
 
-    output = open("arquivo_junto.pdf", "wb")
-    merger.write(output)
-    merger.close()
-    output.close()
+# Close File Descriptors
+merger.close()
+output.close()
