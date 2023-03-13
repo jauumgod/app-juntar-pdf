@@ -1,5 +1,6 @@
 <h2>APP JUNTAR PDF</h2>
 
+-PYTHON 3.9.10
 
  - Aplicativo criado para mesclar pdfs
  
