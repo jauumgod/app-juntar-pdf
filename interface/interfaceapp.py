@@ -3,6 +3,7 @@ from tkinter import filedialog
 import customtkinter
 from tkinter import messagebox
 from PyPDF2 import PdfWriter, PdfReader
+import os
 
 # x - lados
 # y - baixo cima
@@ -22,6 +23,9 @@ class AppMain():
         btn_open = customtkinter.CTkButton(master=self.app, text="Adicionar e Juntar", command=open_folder)
         btn_open.place(x=120,y=100)
 
+        diretorio = customtkinter.CTkButton(master=self.app, text="USO", width=5, command=show_info)
+        diretorio.place(x=350,y=155)
+
 
         self.app.mainloop()
 
@@ -34,15 +38,38 @@ def open_folder():
         title="Selecione os arquivos de pdf",
         filetypes=(("Arquivos pdf", "*.pdf"), ("Todos os arquivos", "*.*"))
     )
-    
-    for pdf in arquivos:
-        merger.append(pdf)
 
-    output = open("./arquivo_junto.pdf", "wb")
-    merger.write(output)
-    merger.close()
+    if arquivos == None:
+        print("nenhum arquivo selecionado")
+        
+    if arquivos:
 
-    messagebox.showinfo(title="Ok", message="Concluido!")
+        try:
+            for pdf in arquivos:
+                merger.append(pdf)
+
+            try:
+                name = os.getlogin()
+                diretorio = "C:\\users\\"+name+"\\downloads\\out_pdf"
+                if diretorio:
+                    print("Diretorio ja existe!")
+                else:
+                    os.mkdir("C:\\users\\"+name+"\\downloads\\out_pdf\\")
+            except:
+                print("nao foi possivel criar diretorio")
+
+
+            output = open("C:\\users\\"+name+"\\downloads\\out_pdf\\arquivo_junto.pdf", "wb")
+            merger.write(output)
+            merger.close()
+
+            messagebox.showinfo(title="Ok", message="Concluido!")
+        except:
+            messagebox.showerror(title="Erro", message="Não foi possivel juntar, arquivo selecionado corrompido ou nao pode ser mesclado")
+
+
+def show_info():
+    messagebox.showinfo(title="Modo de usar",message="COMO USAR:\n\n1 - Selecionar os arquivos\n2 - Clicar em Select\n3 - Arquivo Salvo na pasta /out em Downloads")
     
 def main():
     AppMain()
