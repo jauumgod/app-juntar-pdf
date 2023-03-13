@@ -10,3 +10,7 @@
  ```
 
 PARA GERAR EXECUTAVEL USAR O py-auto-exe 
+
+INTERFACE
+
+![image](https://user-images.githubusercontent.com/69704112/224727785-c66ad5ab-8156-48fa-b555-3bd10f7542fd.png)
